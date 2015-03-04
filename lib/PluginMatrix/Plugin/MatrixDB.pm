@@ -92,13 +92,14 @@ sub register {
 
       my $select  = qq~
           SELECT pname, pversion, abstract, perl_version, $column, result, author
-          FROM matrix 
-          WHERE pversion IN ( $perl_ph ) OR
-              $column IN ( $fw_ph );
-      ~;
+          FROM matrix ~;
+#          WHERE pversion IN ( $perl_ph ) OR
+#              $column IN ( $fw_ph );
+#      ~;
     
       my $sth = $dbs{$framework}->prepare( $select );
-      $sth->execute( @{ $perls }, @{ $versions } );
+#      $sth->execute( @{ $perls }, @{ $versions } );
+      $sth->execute;
     
       my %results = ( 0 => 'nok', 1 => 'ok', -1 => 'requires greater version of ' . ucfirst $framework );
     
