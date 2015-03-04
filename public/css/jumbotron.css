@@ -1,0 +1,28 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.margin-10 {
+  margin: 10px;
+}
+
+.top-10 {
+  padding-top: 10px;
+}
+
+.table-striped > tbody > tr > td.ok {
+  background-color: green;
+  color: white;
+}
+
+.table-striped > tbody > tr > td.nok {
+  background-color: red;
+  color: white;
+}
+
+.panel-body ul {
+  list-style: none;
+}
+

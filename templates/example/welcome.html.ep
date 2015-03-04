@@ -1,7 +1,30 @@
 % layout 'default';
-% title 'Welcome';
-<h2><%= $msg %></h2>
-This page was generated from the template "templates/example/welcome.html.ep"
-and the layout "templates/layouts/default.html.ep",
-<%= link_to 'click here' => url_for %> to reload the page or
-<%= link_to 'here' => '/index.html' %> to move forward to a static page.
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Hello, world!</h1>
+            <p>This page is for all who are interested in web development with Perl and Mojolicious or Dancer2</p>
+            <p>There are several plugins for those two frameworks and this matrix will show you what plugins are available
+               for the Perl and Mojolicious/Dancer2 version you use.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-5 margin-10">
+                <h2>Mojolicious</h2>
+                <p><a href="http://mojolicio.us">Mojolicious</a></p>
+                <p><a class="btn btn-success" href="/mojolicious" role="button">View matrix for Mojolicious »</a>
+                </p>
+            </div>
+            
+            <div class="col-md-5 margin-10">
+                <h2>Dancer2</h2>
+                <p><a href="http://perldancer.org">Dancer</a>.</p>
+                <p><a class="btn btn-success" href="/dancer" role="button">View matrix for Dancer2 »</a>
+                </p>
+            </div>
+        </div>
+

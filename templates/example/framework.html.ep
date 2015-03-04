@@ -1,0 +1,79 @@
+% layout 'default';
+% use List::Util qw(first);
+
+<div class="container">
+
+  <div class="row">
+    <div class="panel-group top-10" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" id="matrix-params">
+              Perl-/Framework versions
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+<form action="/<%= $framework %>" method="post">
+       <%= ucfirst $framework %>:
+            <ul class="horizontal-ul">
+% for my $index ( 0 .. $#{ $versions } ) {
+%     my $version = $versions->[$index];
+%     my $latest  = (first{ $version eq $_ }@{$selected_fws}) ? 'checked="checked"' : '';
+         <li><input type="checkbox" name="framework" value="<%= $version %>" <%== $latest %> /><%= $version %></li>
+% }
+            </ul>
+
+       Perl:
+            <ul>
+% for my $index ( 0 .. $#{ $perls } ) {
+%     my $perl    = $perls->[$index];
+%     my $latest  = (first{ $perl eq $_ }@{$selected_perls}) ? 'checked="checked"' : '';
+         <li><input type="checkbox" name="perl" value="<%= $perl %>" <%== $latest %> /><%= $perl %></li>
+% }
+            </ul>
+
+            <button type="submit" class="btn btn-success">Show Matrix</button>
+</form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+% my %map = ( ok => 'ok', nok => 'nok', 'unknown' => 'unknown');
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Plugin name</th>
+          <th>Abstract</th>
+          <th>Author</th>
+% for my $combi ( @{ $combis } ) {
+%     (my $combi_class = $combi) =~ tr/.\//- /;
+          <th class="switch <%= $combi_class %>"><%= $combi %></th>
+% }
+        </tr>
+      </thead>
+      <tbody>
+% for my $plugin ( sort keys %{ $plugins } ) {
+%   my @versions = reverse sort keys %{ $plugins->{$plugin} };
+%   my $latest   = $versions[0];
+%   my $module   = $plugin =~ s/-/::/gr;
+        <tr>
+          <td><a href="https://metacpan.org/pod/<%= $module %>"><%= $plugin %> <%= $latest %></a></td>
+          <td><%= $plugins->{$plugin}->{$latest}->{abstract} %></td>
+          <td><%= $plugins->{$plugin}->{$latest}->{author} // '' %></td>
+% for my $combi ( @{ $combis } ) {
+%     my $result_class = $map{ $plugins->{$plugin}->{$latest}->{$combi} // 'unknown' } // $map{unknown};
+%     (my $combi_class = $combi) =~ tr/.\//- /;
+          <td class="switch <%= $combi_class %> <%= $result_class %>"><%= $plugins->{$plugin}->{$latest}->{$combi} %></td>
+% }
+        </tr>
+% }
+      </tbody>
+    </table>
+
+  </div>
+</div>
