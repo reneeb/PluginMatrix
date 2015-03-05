@@ -3,6 +3,7 @@ package PluginMatrix::Plugin::MatrixDB;
 use Mojo::Base 'Mojolicious::Plugin';
 
 use DBI;
+use List::Util qw/max/;
 
 sub register {
     my ($self, $app, $config) = @_;
@@ -102,12 +103,36 @@ sub register {
       $sth->execute;
     
       my %results = ( 0 => 'nok', 1 => 'ok', -1 => 'requires greater version of ' . ucfirst $framework );
+
+      my %combis;
+
+      for my $perl ( @{ $perls } ) {
+          for my $fw ( @{ $versions } ) {
+              $combis{ "$perl / $fw" } = 1;
+          }
+      }
     
       my %plugins;
+
+      ROW:
       while ( my @row = $sth->fetchrow_array ) {
           $plugins{$row[0]}->{$row[1]}->{abstract} = $row[2];
           $plugins{$row[0]}->{$row[1]}->{author}   = $row[6];
+
+          # save only requested perl/framework version combination
+          next ROW if !$combis{ "$row[3] / $row[4]" };
+
           $plugins{$row[0]}->{$row[1]}->{"$row[3] / $row[4]"} = $results{$row[5]};
+      }
+
+      # delete all version that is not the latest version
+      for my $plugin ( keys %plugins ) {
+          my @keys = sort keys %{ $plugins{$plugin} };
+          next if @keys == 1;
+
+          pop @keys;
+
+          delete @{ $plugins{$plugin} }{@keys};
       }
     
       return %plugins;
