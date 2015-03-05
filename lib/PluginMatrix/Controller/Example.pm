@@ -41,12 +41,21 @@ sub framework {
   $self->respond_to(
       json => { json => \%plugins },
       html => {},
-      any  => { status => 415, text => sprintf( 'Cannot deliver %s. Please request either json or html.', $self->stash('format') ) },
+      any  => { status => 415, text => sprintf( 'Cannot deliver %s. Please request either json or html.', $self->stash('format') // '?' ) },
   );
 }
 
 sub error {
   my $self = shift;
+
+  my $framework = $self->param('framework_name');
+
+  my $fws = $self->config->{frameworks} || {};
+
+  if ( !$fws->{$framework} ) {
+      $self->redirect_to('/');
+      return;
+  }
 
   my $error = $self->error_for(
       perl              => $self->param('perl'),
