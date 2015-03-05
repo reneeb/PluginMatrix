@@ -1,0 +1,15 @@
+% layout 'default';
+
+<div class="container">
+
+  <div class="row top-10">
+
+    <h2>Error log for <%= $module %> <%= $version %></h2>
+    <p>(<%= $perl %>/<%= $framework_version %>)</p>
+
+    <pre>
+%= $error_log
+    </pre>
+
+  </div>
+</div>
