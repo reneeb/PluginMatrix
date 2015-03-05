@@ -68,7 +68,15 @@
 % for my $combi ( @{ $combis } ) {
 %     my $result_class = $map{ $plugins->{$plugin}->{$latest}->{$combi} // 'unknown' } // $map{unknown};
 %     (my $combi_class = $combi) =~ tr/.\//- /;
-          <td class="switch <%= $combi_class %> <%= $result_class %>"><%= $plugins->{$plugin}->{$latest}->{$combi} %></td>
+          <td class="switch <%= $combi_class %> <%= $result_class %>">
+              <%= $plugins->{$plugin}->{$latest}->{$combi} %>
+              % if ( $result_class eq 'nok' ) {
+              %     my ($perl, $fw_version) = split /\s*\/\s*/, $combi;
+              <a href="<%= url_for("/$framework/$plugin/$perl/$fw_version/$latest/error") %>">
+                  <span class="glyphicon glyphicon-question-sign"></span>
+              </a>
+              % }
+          </td>
 % }
         </tr>
 % }

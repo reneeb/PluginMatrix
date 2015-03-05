@@ -16,6 +16,7 @@ sub startup {
   # Normal route to controller
   $r->get('/')->to('example#welcome');
   $r->any('/:framework_name')->to('example#framework');
+  $r->any('/:framework_name/:module/#perl/#framework_version/#version/error')->to('example#error');
 }
 
 1;

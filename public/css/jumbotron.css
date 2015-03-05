@@ -26,3 +26,8 @@ body {
   list-style: none;
 }
 
+.glyphicon {
+  font-size: 1.3em;
+  color: white;
+}
+

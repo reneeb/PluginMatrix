@@ -137,6 +137,38 @@ sub register {
     
       return %plugins;
     });
+
+    $app->helper( error_for => sub {
+      my ($c, %param) = @_;
+
+      my $framework = $param{framework};
+      my $column    = $fws->{$framework}->{column};
+
+      my $select  = qq~
+          SELECT error_log
+          FROM matrix
+          WHERE perl_version = ? AND
+                pversion     = ? AND
+                $column      = ? AND
+                pname        = ?
+      ~;
+    
+      my $dbh = $dbs{$framework};
+      my $sth = $dbs{$framework}->prepare( $select ) or die $dbh->errstr;
+      $sth->execute(
+        $param{perl},
+        $param{version},
+        $param{framework_version},
+        $param{plugin},
+      ) or die $dbh->errstr;
+
+      my $error;
+      while ( my ($log) = $sth->fetchrow_array ) {
+        $error = $log;
+      }
+
+      return $error;
+    });
 }
 
 1;
