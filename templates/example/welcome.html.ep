@@ -16,14 +16,18 @@
             <div class="col-md-5 margin-10">
                 <h2>Mojolicious</h2>
                 <p><a href="http://mojolicio.us">Mojolicious</a></p>
-                <p><a class="btn btn-success" href="/mojolicious" role="button">View matrix for Mojolicious »</a>
+                <p>
+                    <a class="btn btn-default" href="/mojolicious.sqlite" role="button">Download SQLite-DB »</a>
+                    <a class="btn btn-success" href="/mojolicious" role="button">View matrix for Mojolicious »</a>
                 </p>
             </div>
             
             <div class="col-md-5 margin-10">
                 <h2>Dancer2</h2>
                 <p><a href="http://perldancer.org">Dancer</a>.</p>
-                <p><a class="btn btn-success" href="/dancer" role="button">View matrix for Dancer2 »</a>
+                <p>
+                    <a class="btn btn-default" href="/dancer.sqlite" role="button">Download SQLite-DB »</a>
+                    <a class="btn btn-success" href="/dancer" role="button">View matrix for Dancer2 »</a>
                 </p>
             </div>
         </div>
