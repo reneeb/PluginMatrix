@@ -38,7 +38,11 @@ sub framework {
     framework      => $framework,
   );
 
-  $self->render;
+  $self->respond_to(
+      json => { json => \%plugins },
+      html => {},
+      any  => { status => 415, text => sprintf( 'Cannot deliver %s. Please request either JSON or HTML.', $self->stash('format') ) },
+  );
 }
 
 1;
