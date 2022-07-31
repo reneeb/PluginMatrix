@@ -1,6 +1,10 @@
 package PluginMatrix;
 use Mojo::Base 'Mojolicious';
 
+# ABSTRACT: Display a table of available plugins for Mojolicious/Dancer2
+
+our $VERSION = '0.01';
+
 # This method will run once at server start
 sub startup {
   my $self = shift;
